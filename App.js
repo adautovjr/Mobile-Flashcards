@@ -1,21 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { createStore } from 'redux';
+import { Provider as StoreProvider } from 'react-redux';
+import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
+
+import createRootReducer from './src/reducers';
+import middleware from './src/middleware';
+import Main from './src/components/Main';
+
+const store = createStore(createRootReducer(), middleware);
+
+const theme = {
+    ...DefaultTheme,
+    dark: true,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: 'blue',
+      accent: 'yellow',
+    },
+  };
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    return (
+        <SafeAreaProvider>
+            <StoreProvider store={store}>
+                <PaperProvider theme={theme}>
+                    <Main />
+                </PaperProvider>
+            </StoreProvider>
+        </SafeAreaProvider>
+    );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
