@@ -12,7 +12,7 @@ const store = createStore(createRootReducer(), middleware);
 
 const theme = {
     ...DefaultTheme,
-    dark: true,
+    dark: false,
     colors: {
       ...DefaultTheme.colors,
       primary: 'blue',

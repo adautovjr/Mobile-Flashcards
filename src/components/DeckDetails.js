@@ -26,23 +26,24 @@ const styles = StyleSheet.create({
 });
 
 function DeckDetails({ deck, navigation }) {
-    const onPress = () => navigation.navigate('NewCard', { deckId: deck.id });
+    const onPressAddCard = () => navigation.navigate('New Card', { deckId: deck.id });
+    const onPressQuiz = () => navigation.navigate('Quiz', { deckId: deck.id });
 
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View>
                 <Text>{ deck.deckName }</Text>
-                <Text>{ `${Object.keys(deck.cards).length} cards` }</Text>
+                <Text>{ `${Object.keys(deck.cards).length} card${Object.keys(deck.cards).length !== 1 ? "s" : ""}` }</Text>
             </View>
             <View>
                 <Text>{ deck.description }</Text>
             </View>
             <View style={{ margin: 20 }} />
             <View>
-                <TouchableOpacity onPress={onPress} style={styles.button} title="Add Card">
+                <TouchableOpacity onPress={onPressAddCard} style={styles.button} title="Add Card">
                     <Text style={ styles.buttonText }> Add Card </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onPress} style={{ ...styles.button, ...styles.outlined}} title="Quiz">
+                <TouchableOpacity onPress={onPressQuiz} style={{ ...styles.button, ...styles.outlined}} title="Quiz">
                     <Text> Quiz </Text>
                 </TouchableOpacity>
             </View>

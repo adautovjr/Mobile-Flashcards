@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import DeckDetails from './DeckDetails';
 import HomeStackScreen from './HomeStackScreen';
 import NewCard from './NewCard';
+import Quiz from './Quiz';
 import { handleInitialData } from "../actions/shared";
 
 const MainStack = createStackNavigator();
@@ -38,8 +39,11 @@ class Main extends Component {
                     <MainStack.Screen name="Details">
                         {({ route, navigation }) => <DeckDetails deckId={route.params.deckId} navigation={navigation} />}
                     </MainStack.Screen>
-                    <MainStack.Screen name="NewCard">
+                    <MainStack.Screen name="New Card">
                         {({ route, navigation }) => <NewCard deckId={route.params.deckId} navigation={navigation} />}
+                    </MainStack.Screen>
+                    <MainStack.Screen name="Quiz">
+                        {({ route, navigation }) => <Quiz deckId={route.params.deckId} navigation={navigation} />}
                     </MainStack.Screen>
                 </MainStack.Navigator>
             </NavigationContainer>

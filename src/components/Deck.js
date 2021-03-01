@@ -12,7 +12,7 @@ function Deck({ deck, navigation }) {
         <View>
             <DeckListItem>
                 <Card className="deck-card">
-                    <Card.Title title={deck.deckName} subtitle={`${Object.keys(deck.cards).length} cards`} left={LeftContent} />
+                    <Card.Title title={deck.deckName} subtitle={`${Object.keys(deck.cards).length} card${Object.keys(deck.cards).length !== 1 ? "s" : ""}`} left={LeftContent} />
                     <Card.Content>
                         <Paragraph>
                             {

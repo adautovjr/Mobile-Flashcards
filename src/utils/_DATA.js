@@ -9,55 +9,19 @@ let decks = {
                 id: '8xf0y6ziyjabvozdd253nd',
                 question: '9*7?',
                 answer: '72',
-                timestamp: 1467166872634,
-                optionOne: {
-                    isCorrect: true,
-                    text: '72',
-                },
-                optionTwo: {
-                    isCorrect: false,
-                    text: '81',
-                },
-                optionThree: {
-                    isCorrect: false,
-                    text: '63',
-                },
-                optionFour: {
-                    isCorrect: false,
-                    text: '97',
-                }
+                timestamp: 1467166872634
             },
             "6ni6ok3ym7mf1p33lnez": {
                 id: '6ni6ok3ym7mf1p33lnez',
                 question: '9*9?',
                 answer: '81',
-                timestamp: 1468479767190,
-                optionOne: {
-                    isCorrect: false,
-                    text: '18',
-                },
-                optionTwo: {
-                    isCorrect: false,
-                    text: '99',
-                },
-                optionThree: {
-                    isCorrect: true,
-                    text: '81',
-                }
+                timestamp: 1468479767190
             },
             "am8ehyc8byjqgar0jgpub9": {
                 id: 'am8ehyc8byjqgar0jgpub9',
                 question: '1+2?',
                 answer: '3',
-                timestamp: 1488579767190,
-                optionOne: {
-                    isCorrect: false,
-                    text: '12',
-                },
-                optionTwo: {
-                    isCorrect: true,
-                    text: '3',
-                }
+                timestamp: 1488579767190
             }
         }
     },
@@ -71,21 +35,13 @@ let decks = {
                 id: 'vthrdm985a262al8qx3do',
                 question: '9*7?',
                 answer: '72',
-                timestamp: 1467166872634,
-                optionOne: {
-                    isCorrect: true,
-                    text: '72',
-                },
-                optionTwo: {
-                    isCorrect: false,
-                    text: '81',
-                }
+                timestamp: 1467166872634
             },
         }
     }
 }
 
-function generateUID() {
+export function generateUID() {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
