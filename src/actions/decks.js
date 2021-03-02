@@ -3,6 +3,7 @@ import { generateUID } from '../utils/_DATA';
 export const RECEIVE_DECKS = '@decks/RECEIVE_DECKS';
 export const ADD_DECK = '@decks/ADD_DECK';
 export const ADD_CARD = '@decks/ADD_CARD';
+export const SAVE_SCORE = '@decks/SAVE_SCORE';
 
 
 export function receiveDecks(decks) {
@@ -17,6 +18,7 @@ export function addDeck(decks, name, description) {
         id: generateUID(),
         deckName: name,
         description,
+        bestScore: 0,
         timestamp: Date.now(),
         cards: []
     }
@@ -46,6 +48,19 @@ export function addCard(decks, deckId, question, answer) {
                     ...decks[deckId].cards,
                     [card.id]: card
                 }
+            }
+        }
+    }
+}
+
+export function saveScore(decks, deckId, score) {
+    return {
+        type: ADD_CARD,
+        decks: {
+            ...decks,
+            [deckId]: {
+                ...decks[deckId],
+                bestScore: score > decks[deckId].bestScore ? score : decks[deckId].bestScore
             }
         }
     }

@@ -3,6 +3,7 @@ let decks = {
         id: '8xf0y6z34sdfk235fd53nd',
         deckName: 'Math',
         description: 'Math test on thursday',
+        bestScore: 0,
         timestamp: 1467166872632,
         cards: {
             "8xf0y6ziyjabvozdd253nd": {
@@ -27,15 +28,28 @@ let decks = {
     },
     'xj352vofupe1dqz9emx13r': {
         id: 'xj352vofupe1dqz9emx13r',
-        deckName: 'Math 2',
-        description: 'Math test on friday too',
-        timestamp: 1467166872634,
+        deckName: 'Portuguese',
+        description: 'Chapter 3 from my Portuguese learning book',
+        bestScore: 0,
+        timestamp: 1467166871789,
         cards: {
-            "vthrdm985a262al8qx3do": {
-                id: 'vthrdm985a262al8qx3do',
-                question: '9*7?',
-                answer: '72',
-                timestamp: 1467166872634
+            "2vem2al8qx3dv1dqz9": {
+                id: '2vem2al8qx3dv1dqz9',
+                question: 'Bom dia!',
+                answer: 'Good morning!',
+                timestamp: 1467166872222
+            },
+            "ofupe62al8dm985ado": {
+                id: 'ofupe62al8dm985ado',
+                question: 'Cansados',
+                answer: 'Tired',
+                timestamp: 1467166872555
+            },
+            "ml8qx3m9rda2852ado": {
+                id: 'ml8qx3m9rda2852ado',
+                question: 'Biggest brazilian football club',
+                answer: 'Flamengo',
+                timestamp: 1467166872111
             },
         }
     }

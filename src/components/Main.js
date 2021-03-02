@@ -8,6 +8,7 @@ import DeckDetails from './DeckDetails';
 import HomeStackScreen from './HomeStackScreen';
 import NewCard from './NewCard';
 import Quiz from './Quiz';
+import Score from './Score';
 import { handleInitialData } from "../actions/shared";
 
 const MainStack = createStackNavigator();
@@ -44,6 +45,9 @@ class Main extends Component {
                     </MainStack.Screen>
                     <MainStack.Screen name="Quiz">
                         {({ route, navigation }) => <Quiz deckId={route.params.deckId} navigation={navigation} />}
+                    </MainStack.Screen>
+                    <MainStack.Screen name="Score">
+                        {({ route, navigation }) => <Score deckId={route.params.deckId} responses={route.params.responses} navigation={navigation} />}
                     </MainStack.Screen>
                 </MainStack.Navigator>
             </NavigationContainer>

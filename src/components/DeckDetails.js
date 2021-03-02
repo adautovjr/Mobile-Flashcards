@@ -37,6 +37,7 @@ function DeckDetails({ deck, navigation }) {
             </View>
             <View>
                 <Text>{ deck.description }</Text>
+                <Text>Best Score: { (deck.bestScore*100).toFixed() }%</Text>
             </View>
             <View style={{ margin: 20 }} />
             <View>

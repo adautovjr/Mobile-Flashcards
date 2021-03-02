@@ -39,7 +39,7 @@ export default function HomeStackScreen({ decksIds, navigation }) {
             }}
         >
             <Tab.Screen name="Decks">
-                {() => <DeckList decks={decksIds} navigation={navigation} />}
+                {() => <DeckList decksIds={decksIds} navigation={navigation} />}
             </Tab.Screen>
             <Tab.Screen name="New Deck" component={NewDeck} />
         </Tab.Navigator>

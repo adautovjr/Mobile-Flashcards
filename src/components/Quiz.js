@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Dimensions, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -74,7 +74,14 @@ const Quiz = ({ deck, cards, navigation }) => {
     const screenWidth = Math.round(Dimensions.get('window').width);
     const [pressed, setPressed] = React.useState(false);
     const [responses, setResponses] = React.useState(false);
-    
+    const percentage = (Object.keys(responses).length / cards.length);
+
+    useEffect(() => {
+        if (percentage === 1) {
+            setTimeout(() => navigation.navigate('Score', { deckId: deck.id, responses }), 1200);
+        }
+    }, [percentage]);
+
     const handlePressButtons = (id, isCorrect) => {
         setResponses({
             ...responses,
@@ -87,9 +94,6 @@ const Quiz = ({ deck, cards, navigation }) => {
     const _renderItem = ({ item }) => {
         const isCorrectDisabled = responses[item.id] !== undefined && !responses[item.id].isCorrect;
         const isIncorrectDisabled = responses[item.id] !== undefined && responses[item.id].isCorrect;
-
-        console.log("isCorrectDisabled: ", isCorrectDisabled);
-        console.log("isIncorrectDisabled: ", isIncorrectDisabled);
 
         return (
             <View style={styles.cardHolder} key={item.id}>
@@ -121,7 +125,7 @@ const Quiz = ({ deck, cards, navigation }) => {
                 </FlipCard>
                 {
                     pressed[item.id]
-                    ?   <View style={styles.buttons}>
+                        ? <View style={styles.buttons}>
                             <TouchableOpacity disabled={isCorrectDisabled} style={isCorrectDisabled ? { ...styles.buttonCorrect, ...styles.buttonDisabled } : styles.buttonCorrect} onPress={() => handlePressButtons(item.id, true)}>
                                 <Text style={styles.buttonText}>Correct</Text>
                             </TouchableOpacity>
@@ -129,7 +133,7 @@ const Quiz = ({ deck, cards, navigation }) => {
                                 <Text style={styles.buttonText}>Incorrect</Text>
                             </TouchableOpacity>
                         </View>
-                    :   <View style={styles.whiteSpace} />
+                        : <View style={styles.whiteSpace} />
                 }
             </View>
         )
@@ -139,7 +143,13 @@ const Quiz = ({ deck, cards, navigation }) => {
         <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 50, marginTop: 50 }}>
             <View>
                 <View style={{ marginRight: 50, marginLeft: 50 }}>
-                    <ProgressBar progress={(Object.keys(responses).length/cards.length)} color="#cccccc"/>
+                    <Text style={{ textAlign: 'center', fontSize: 16 }}>
+                        {`${(percentage * 100).toFixed()}%`}
+                    </Text>
+                    <ProgressBar progress={percentage} color="#cccccc" />
+                    <Text style={{ textAlign: 'center', fontSize: 12 }}>
+                        {`${cards.length - Object.keys(responses).length} cards left`}
+                    </Text>
                 </View>
                 <Carousel
                     data={cards}

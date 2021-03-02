@@ -5,19 +5,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Title } from 'react-native-paper';
 import Deck from './Deck';
 
-const DeckList = ({ decks, navigation }) => {
-    const renderDeck = (deck) => (
-        <Deck deckId={deck.item} navigation={navigation} />
+const DeckList = ({ decksIds, navigation }) => {
+    const renderDeck = (deckId) => (
+        <Deck deckId={deckId.item} navigation={navigation} />
     );
 
     return (
         <SafeAreaView style={{ paddingTop: 20, paddingBottom: 20, paddingLeft: 15, paddingRight: 15 }}>
             <Title>Available Decks</Title>
             {
-                decks !== undefined && decks.length > 0
+                decksIds !== undefined && decksIds.length > 0
                 ? <>
                     <FlatList
-                        data={decks}
+                        data={decksIds}
                         renderItem={renderDeck}
                         keyExtractor={id => id}
                     />
@@ -28,4 +28,11 @@ const DeckList = ({ decks, navigation }) => {
     );
 }
 
-export default connect()(DeckList);
+function mapStateToProps({ decks }, { navigation, decksIds }){
+    return {
+        decksIds: Object.values(decksIds).sort((a, b) => decks[b].timestamp - decks[a].timestamp),
+        navigation
+    }
+}
+
+export default connect(mapStateToProps)(DeckList);
