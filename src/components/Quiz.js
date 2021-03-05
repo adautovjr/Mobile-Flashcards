@@ -1,41 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Dimensions, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Dimensions, StyleSheet, View, Text, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ProgressBar, Colors } from 'react-native-paper';
+import ProgressBar from 'react-native-progress/Bar';
 import Carousel from 'react-native-snap-carousel';
 import FlipCard from 'react-native-flip-card';
+import AwesomeButton from "react-native-really-awesome-button";
+import { CommonActions } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
-    buttonCorrect: {
-        backgroundColor: '#28a745',
-        minWidth: 120,
-        minHeight: 60,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 10,
-        borderRadius: 10
-    },
-    buttonIncorrect: {
-        backgroundColor: '#dc3545',
-        minWidth: 120,
-        minHeight: 60,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 10,
-        borderRadius: 10
-    },
-    outlined: {
-        borderWidth: 2,
-        borderColor: '#333',
-        backgroundColor: 'white',
-        color: '#333',
-    },
-    buttonText: {
-        color: 'white',
-    },
     cardHolder: {
         flex: 1,
         justifyContent: 'space-between'
@@ -57,30 +30,90 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         paddingBottom: 20
     },
-    tip: {
-        opacity: 0.2,
-        position: 'absolute',
-        bottom: 5
+    flipHolder: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     whiteSpace: {
         minHeight: 80,
     },
     buttonDisabled: {
-        opacity: 0.1
+        opacity: 0.05
+    },
+    cardText: {
+        fontSize: 30,
+        textAlign: 'center'
     }
 });
 
 const Quiz = ({ deck, cards, navigation }) => {
     const screenWidth = Math.round(Dimensions.get('window').width);
+    const [flipped, setFlipped] = React.useState(false);
     const [pressed, setPressed] = React.useState(false);
     const [responses, setResponses] = React.useState(false);
-    const percentage = (Object.keys(responses).length / cards.length);
+    const percentage = cards.length > 0 ? (Object.keys(responses).length / cards.length) : 0;
+
+    useEffect(() => {
+        if (cards.length === 0) {
+            Alert.alert(
+                'No cards on this deck',
+                'Would you like do add new cards?',
+                [
+                    {
+                        text: "Add cards", 
+                        style: 'success', 
+                        onPress: () =>
+                            navigation.dispatch(
+                                CommonActions.reset({
+                                    index: 1,
+                                    routes: [
+                                        { name: 'Home' },
+                                        {
+                                            name: "Details",
+                                            params: {
+                                                deckId: deck.id
+                                            }
+                                        },
+                                        {
+                                            name: "New Card",
+                                            params: {
+                                                deckId: deck.id
+                                            }
+                                        },
+                                    ],
+                                })
+                            )
+                    },
+                    {
+                        text: 'Back to decks',
+                        style: 'destructive',
+                        onPress: () => navigation.dispatch(
+                            CommonActions.reset({
+                                index: 1,
+                                routes: [
+                                    { name: 'Home' }
+                                ],
+                            })
+                        ),
+                    },
+                ]
+            );
+        }
+    }, []);
 
     useEffect(() => {
         if (percentage === 1) {
             setTimeout(() => navigation.navigate('Score', { deckId: deck.id, responses }), 1200);
         }
     }, [percentage]);
+
+    const handleFlip = (id) => {
+        setFlipped({
+            ...flipped,
+            [id]: !flipped[id]
+        });
+    }
 
     const handlePressButtons = (id, isCorrect) => {
         setResponses({
@@ -103,8 +136,8 @@ const Quiz = ({ deck, cards, navigation }) => {
                     perspective={1000}
                     flipHorizontal={true}
                     flipVertical={false}
-                    flip={false}
-                    clickable={true}
+                    flip={flipped[item.id]}
+                    clickable={false}
                     onFlipEnd={() => {
                         setPressed({
                             ...pressed,
@@ -113,25 +146,40 @@ const Quiz = ({ deck, cards, navigation }) => {
                     }}
                 >
                     <View style={styles.cardFace}>
-                        <Text>{item.question}</Text>
-                        {
-                            !pressed[item.id] &&
-                            <Text style={styles.tip}>Press to show answer</Text>
-                        }
+                        <Text style={styles.cardText}>{item.question}</Text>
                     </View>
                     <View style={styles.cardFace}>
-                        <Text>{item.answer}</Text>
+                        <Text style={styles.cardText}>{item.answer}</Text>
                     </View>
                 </FlipCard>
+                <View style={styles.flipHolder}>
+                    <AwesomeButton width={120} height={50} style={{ marginBottom: 20 }} onPress={() => handleFlip(item.id)}>
+                        Flip
+                    </AwesomeButton>
+                </View>
                 {
                     pressed[item.id]
                         ? <View style={styles.buttons}>
-                            <TouchableOpacity disabled={isCorrectDisabled} style={isCorrectDisabled ? { ...styles.buttonCorrect, ...styles.buttonDisabled } : styles.buttonCorrect} onPress={() => handlePressButtons(item.id, true)}>
-                                <Text style={styles.buttonText}>Correct</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity disabled={isIncorrectDisabled} style={isIncorrectDisabled ? { ...styles.buttonIncorrect, ...styles.buttonDisabled } : styles.buttonIncorrect} onPress={() => handlePressButtons(item.id, false)}>
-                                <Text style={styles.buttonText}>Incorrect</Text>
-                            </TouchableOpacity>
+                            <AwesomeButton
+                                disabled={isIncorrectDisabled}
+                                style={isIncorrectDisabled ? { margin: 10, ...styles.buttonDisabled } : { margin: 10 }}
+                                onPress={() => handlePressButtons(item.id, false)}
+                                backgroundColor="#dc3545"
+                                backgroundDarker="#A82935"
+                                width={120}
+                            >
+                                Incorrect
+                            </AwesomeButton>
+                            <AwesomeButton
+                                disabled={isCorrectDisabled}
+                                style={isCorrectDisabled ? { margin: 10, ...styles.buttonDisabled } : { margin: 10 }}
+                                onPress={() => handlePressButtons(item.id, true)}
+                                backgroundColor="#28a745"
+                                backgroundDarker="#22893A"
+                                width={120}
+                            >
+                                Correct
+                            </AwesomeButton>
                         </View>
                         : <View style={styles.whiteSpace} />
                 }
@@ -140,24 +188,24 @@ const Quiz = ({ deck, cards, navigation }) => {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 50, marginTop: 50 }}>
+        <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 20, marginTop: 20 }}>
             <View>
                 <View style={{ marginRight: 50, marginLeft: 50 }}>
-                    <Text style={{ textAlign: 'center', fontSize: 16 }}>
-                        {`${(percentage * 100).toFixed()}%`}
+                    <Text style={{ textAlign: 'right', fontSize: 12 }}>
+                        {`${Object.keys(responses).length}/${cards.length}`}
                     </Text>
-                    <ProgressBar progress={percentage} color="#cccccc" />
-                    <Text style={{ textAlign: 'center', fontSize: 12 }}>
-                        {`${cards.length - Object.keys(responses).length} cards left`}
-                    </Text>
+                    <ProgressBar progress={percentage} borderColor="#cccccc" color="#3186F6" width={null} useNativeDriver={true} />
                 </View>
-                <Carousel
-                    data={cards}
-                    renderItem={_renderItem}
-                    sliderWidth={screenWidth}
-                    itemWidth={screenWidth - 50}
-                    style={{ flex: 1 }}
-                />
+                {
+                    (cards.length > 0) &&
+                    <Carousel
+                        data={cards}
+                        renderItem={_renderItem}
+                        sliderWidth={screenWidth}
+                        itemWidth={screenWidth - 50}
+                        style={{ flex: 1 }}
+                    />
+                }
             </View>
         </SafeAreaView >
     );

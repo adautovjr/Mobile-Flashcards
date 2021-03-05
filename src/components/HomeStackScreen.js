@@ -22,8 +22,14 @@ export default function HomeStackScreen({ decksIds, navigation }) {
                         iconName = focused
                             ? 'ios-list'
                             : 'ios-list';
+                        color = focused
+                            ? '#3186F6'
+                            : '#333';
                     } else if (route.name === 'New Deck') {
                         iconName = focused ? 'ios-information-circle' : 'ios-information-circle-outline';
+                        color = focused
+                            ? '#3186F6'
+                            : '#333';
                     }
 
                     // You can return any component that you like here!
@@ -34,8 +40,8 @@ export default function HomeStackScreen({ decksIds, navigation }) {
                 }
             })}
             tabBarOptions={{
-                activeTintColor: 'blue',
-                inactiveTintColor: 'gray',
+                activeTintColor: '#3186F6',
+                inactiveTintColor: '#333',
             }}
         >
             <Tab.Screen name="Decks">
