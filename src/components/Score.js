@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     bestScoreContainer: { 
         flex: 1,
         backgroundColor: '#F5C518',
-        minHeight: 180,
+        minHeight: 150,
     },
     scoreInfo: { 
         textAlign: 'center',
@@ -142,6 +142,7 @@ function Score({ decks, deck, score, percentage, navigation, dispatch }) {
                     backgroundColor="#3186F6"
                     backgroundDarker="#3679D1"
                     width={120}
+                    height={50}
                     style={{ marginBottom: 10 }}
                 >
                     Try again
@@ -152,6 +153,7 @@ function Score({ decks, deck, score, percentage, navigation, dispatch }) {
                     backgroundDarker="#f2f2f2"
                     backgroundShadow="#f2f2f2"
                     width={120}
+                    height={50}
                     textColor='#333333'
                 >
                     Go back
