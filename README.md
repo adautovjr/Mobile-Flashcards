@@ -1,6 +1,6 @@
 # Mobile Flashcards
 
-This is an Udacity's React Developer course project submission where I used React Native and Redux to create an app where you can create multiple flashcard decks to review them later and help you reassure. 
+This is an Udacity's React Developer course project submission where I used React Native and Redux to create an app where you can create multiple flashcard decks to review them later and help you reassure your knowledge in any subject. 
 
 ## Tests
 
