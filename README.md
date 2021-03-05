@@ -23,6 +23,10 @@ In the project directory, in order to install depedencies you can run:
 
 ### `npm install`
 
+and
+
+### `npm install -g expo expo-cli`
+
 Then just run:
 
 ### `expo start`
