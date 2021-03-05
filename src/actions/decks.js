@@ -24,6 +24,7 @@ export function addDeck(decks, name, description) {
     }
     return {
         type: ADD_DECK,
+        deckId: deck.id,
         decks: {
             ...decks,
             [deck.id]: deck

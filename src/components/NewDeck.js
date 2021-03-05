@@ -45,10 +45,25 @@ function NewDeck({ navigation, decks, dispatch }) {
     };
 
     const handleSubmitNewDeck = () => {
-        dispatch(addDeck(decks, name, description));
+        const addDeckAction = addDeck(decks, name, description)
+        dispatch(addDeckAction);
         setName("");
         setDescription("");
-        navigation.dispatch(CommonActions.goBack());
+        ref_input2.current.blur()
+        navigation.dispatch(
+            CommonActions.reset({
+                index: 1,
+                routes: [
+                    { name: 'Home' },
+                    {
+                        name: "Details",
+                        params: {
+                            deckId: addDeckAction.deckId
+                        }
+                    }
+                ],
+            })
+        );
     }
 
     return (

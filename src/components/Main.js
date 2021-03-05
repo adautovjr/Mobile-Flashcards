@@ -10,12 +10,14 @@ import NewCard from './NewCard';
 import Quiz from './Quiz';
 import Score from './Score';
 import { handleInitialData } from "../actions/shared";
+import { setLocalNotification } from "../utils/helpers";
 
 const MainStack = createStackNavigator();
 
 class Main extends Component {
     componentDidMount() {
         this.props.dispatch(handleInitialData());
+        setLocalNotification();
     }
 
     render() {
