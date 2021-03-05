@@ -6,6 +6,7 @@ This is an Udacity's React Developer course project submission where I used Reac
 
 The development version was tested on these devices:
 
+* Samsung S10e
 * Samsung S10 plus
 * Samsung S20
 * iPad Pro
