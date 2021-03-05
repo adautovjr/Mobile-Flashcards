@@ -28,5 +28,5 @@ Then just run:
 ### `expo start`
 
 Runs the app in the development mode.\
-Open [http://localhost:19000](http://localhost:19000) to view the QR Code in the browser.
+Open [http://localhost:19000](http://localhost:19000) to view the QR Code in the browser.\
 Then, open the Expo Go app on your phone and scan the QR Code to view the app.
